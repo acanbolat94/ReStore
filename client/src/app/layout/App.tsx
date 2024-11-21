@@ -1,12 +1,9 @@
 import { useEffect, useState } from "react";
+import { Product } from "../models/product"
 
 function App() {
   // We use the store to manage the latest state of the data
-  const [products, setProducts] = useState(
-    [{ name: 'product1', price: 100.00 },
-    { name: 'product2', price: 200.00 },
-    ]
-  );
+  const [products, setProducts] = useState<Product[]>([]);
 
   // Then we use the us
   useEffect(() => {
@@ -17,7 +14,14 @@ function App() {
 
   function addProducts() {
     // setProducts([...products, { name: "product6", price: 600.00 }])
-    setProducts(prevState => [...prevState, { name: 'product' + (prevState.length + 1), price: (prevState.length * 150) }])
+    setProducts(prevState => [...prevState, {
+      id: prevState.length + 101,
+      name: 'product' + (prevState.length + 1),
+      price: (prevState.length * 150),
+      brand: "some brand",
+      pictureUrl: "https://picsum.photos/300/300",
+      description: "some desc"
+    }])
   }
 
   return (
@@ -35,9 +39,9 @@ function App() {
               </tr>
             </thead>
             <tbody>
-              {products.map((product, index) => (
-                <tr key={index}>
-                  <td>{index}</td>
+              {products.map((product) => (
+                <tr key={product.id}>
+                  <td>{product.id}</td>
                   <td>{product.name}</td>
                   <td>{product.price}</td>
                 </tr>
